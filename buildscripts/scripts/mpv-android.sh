@@ -1,26 +1,22 @@
 #!/bin/bash -e
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BUILD="$DIR/.."
-MPV_ANDROID="$DIR/../.."
+BUILD="./buildscripts"
 
 . $BUILD/include/path.sh
-. $BUILD/include/depinfo.sh
+. $BUILD/include/depinfo.sh # for $v_sdk_build_tools
 
 if [ "$1" == "build" ]; then
 	true
 elif [ "$1" == "clean" ]; then
-	rm -rf $MPV_ANDROID/{app,.}/build $MPV_ANDROID/app/src/main/{libs,obj}
+	rm -rf {app,.}/build app/src/main/{libs,obj}
 	exit 0
 else
 	exit 255
 fi
 
-[ -n "$ANDROID_SIGNING_KEY" ] && BUNDLE=1
-
 nativeprefix () {
 	if [ -f $BUILD/prefix/$1/lib/libmpv.so ]; then
-		echo $BUILD/prefix/$1
+		echo "$(realpath "$BUILD/prefix/$1")"
 	else
 		echo >&2 "Warning: libmpv.so not found in native prefix for $1, support will be omitted"
 	fi
@@ -33,19 +29,20 @@ prefix_x86=$(nativeprefix "x86")
 
 if [[ -z "$prefix32" && -z "$prefix64" && -z "$prefix_x64" && -z "$prefix_x86" ]]; then
 	echo >&2 "Error: no mpv library detected."
-	exit 255
+	exit 1
 fi
 
 chmod +x $BUILD/scripts/write_versions.sh
 $BUILD/scripts/write_versions.sh $ndk_suffix
 
-PREFIX32=$prefix32 PREFIX64=$prefix64 PREFIX_X64=$prefix_x64 PREFIX_X86=$prefix_x86 \
+### Native parts
+PREFIX32="$prefix32" PREFIX64="$prefix64" PREFIX_X64="$prefix_x64" PREFIX_X86="$prefix_x86" \
 ndk-build -C app/src/main -j$cores
 
+### Java parts
 targets=(assembleDebug)
 if [ -z "$DONT_BUILD_RELEASE" ]; then
 	targets+=(assembleRelease)
-	[ -n "$BUNDLE" ] && targets+=(bundleRelease)
 fi
 ./gradlew "${targets[@]}"
 

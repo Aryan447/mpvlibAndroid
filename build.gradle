@@ -1,24 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '2.0.21'
+    ext.kotlin_version = '2.2.21'
     repositories {
         mavenCentral()
-        gradlePluginPortal()
         google()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.11.0'
+        classpath 'com.android.tools.build:gradle:9.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
-// Maven publish plugin removed
-
 allprojects {
     repositories {
         mavenCentral()
-        gradlePluginPortal()
         google()
     }
 }
@@ -26,7 +21,7 @@ allprojects {
 // Use `./gradlew wrapper` to re-generate it
 tasks {
     wrapper {
-        gradleVersion = "8.10.2"
+        gradleVersion = "9.4.1"
         distributionType = Wrapper.DistributionType.BIN
     }
 }

@@ -8,11 +8,11 @@ version = "0.1.10"
 
 android {
     namespace 'is.xyz.mpv'
-    compileSdk 35
+    compileSdk = 36
 
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion 36
+        minSdkVersion 23
+        targetSdk 36
 
         versionCode 38
         versionName version
@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
 }
 
 // Maven publishing code removed
