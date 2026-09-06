@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 ext.abiCodes = ["armeabi-v7a": 1, "arm64-v8a": 2, "x86": 3, "x86_64": 4]
 ext.universalBase = 8000
@@ -23,12 +22,11 @@ android {
     }
 
     // https://youtrack.jetbrains.com/issue/KT-55947
+    // Note: with AGP 9 built-in Kotlin, jvmTarget defaults to
+    // android.compileOptions.targetCompatibility, so no kotlinOptions block needed.
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-        kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 

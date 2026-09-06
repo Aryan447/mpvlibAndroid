@@ -51,7 +51,7 @@ jobs:
           cd buildscripts
           ./download.sh > /dev/null
           ./buildall.sh --arch ${{ matrix.architecture }} mpv
-          ./buildall.sh -n
+          ./buildall.sh --arch ${{ matrix.architecture }} -n
 
       - uses: actions/upload-artifact@v7
         with:
