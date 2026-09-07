@@ -3,6 +3,7 @@ package `is`.xyz.mpv
 // Mapping between Android and mpv keycodes (special keys)
 
 import android.view.KeyEvent.*
+import kotlin.jvm.JvmName
 
 // cf. https://github.com/mpv-player/mpv/blob/master/input/keycodes.h
 val keyMapping = mapOf(
@@ -77,4 +78,5 @@ val keyMapping = mapOf(
 )
 
 @Deprecated("Use keyMapping instead", ReplaceWith("keyMapping"))
+@JvmName("getKeyMappingLegacy")
 val KeyMapping = keyMapping
