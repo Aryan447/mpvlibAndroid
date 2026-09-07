@@ -78,5 +78,5 @@ val keyMapping = mapOf(
 )
 
 @Deprecated("Use keyMapping instead", ReplaceWith("keyMapping"))
-@JvmName("getKeyMappingLegacy")
+@get:JvmName("getKeyMappingLegacy")
 val KeyMapping = keyMapping
