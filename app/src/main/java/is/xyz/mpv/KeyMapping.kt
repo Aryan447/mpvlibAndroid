@@ -77,4 +77,7 @@ val keyMapping = mapOf(
 )
 
 @Deprecated("Use keyMapping instead", ReplaceWith("keyMapping"))
+// Renamed getter: `KeyMapping` and `keyMapping` would otherwise generate the
+// same JVM signature getKeyMapping() (platform declaration clash).
+@get:JvmName("getKeyMappingDeprecated")
 val KeyMapping = keyMapping
